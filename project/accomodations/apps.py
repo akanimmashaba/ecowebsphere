@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class AccomodationConfig(AppConfig):
+class AccomodationsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'accomodation'
+    name = 'accomodations'
