@@ -1,0 +1,6 @@
+site admin: 
+to login go to: localhost:8000/my-admin
+
+    username: admin
+    password: superuser
+
