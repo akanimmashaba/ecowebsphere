@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 py-5">
+  {% comment %}
+    {{results.query}}
+  {% endcomment %}
+
+  <h1>there are {{results|length}} results</h1>
+  <h1> {{results.query.q}}</h1>
+  
+  <ul>
+    {% for result in results %}
+      <li>
+        {{ result.title }}
+      </li>
+    {% empty %}
+    sorry there are no results availabe
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

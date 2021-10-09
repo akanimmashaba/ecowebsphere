@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load hitcount_tags %}
+
+
+{% block content %}
+
+<div class="container mt-3">
+    <h1 class="d-flex justify-content-center">
+        EchoWebSphare
+    </h1>
+    <p>
+        EchoWebSphare is a student cyber space where nwu student can search, view and apply for a student
+        accomodation
+    </p>
+</div>
+<div class="container mt-3 mb-3">
+    <div class="justify-content-center">
+        <form class="d-flex" action="{% url 'search_results' %}" method="get">
+            <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+    </div>
+</div>
+
+<section class="container">
+    <div class="">
+        <h3>
+            Explore Accomodations
+        </h3>
+    </div>
+    <div class="row">
+        {% for house in house %}
+        <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="card" style="width: 18rem;">
+                <img style="height: 30vh;" src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=465&q=80" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{house.title}}</h5>
+                  <samp class="card-text">{{house.address}}</samp>
+                  
+                  <hr>
+                  <span>views: {% get_hit_count for house %}</span>
+                  <hr>
+                  <a href="{% url 'accomodation-detail' house.id %}" class="btn btn-primary">view accomodation</a>
+                </div>
+              </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</section>
+{% endblock %}
