@@ -9,7 +9,7 @@ from django.conf import settings
 
 class CustomUser(AbstractUser):
     # date of birth
-    # 
+    # gender
     def __str__(self):
         return self.email
 
