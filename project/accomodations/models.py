@@ -16,7 +16,7 @@ class Address(models.Model):
     locality = models.CharField(max_length=255, null=True,blank=True, default="soshanguve")
     municipality = models.CharField(max_length=255,default="Tshwane")
     postal_code = models.CharField(max_length=10,default="0152")
-    country = models.CharField(default="South Africa", editable=False)
+    country = models.CharField(default="South Africa", max_length=12, editable=False)
 
     def __str__(self):
         return f"{self.house_number} {self.street_name} {self.locality} {self.postal_code} {self.country}"
@@ -27,7 +27,7 @@ class Accomodation(models.Model, HitCountMixin):
     slug = models.SlugField(unique=True)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',related_query_name='hit_count_generic_relation')
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, null=True, related_name='accomodation_likes')
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='accomodation_likes')
     image_1 = models.ImageField(upload_to='images', null=True, blank=True)
     image_2 = models.ImageField(upload_to='images', null=True, blank=True)
     image_3 = models.ImageField(upload_to='images', null=True, blank=True)
