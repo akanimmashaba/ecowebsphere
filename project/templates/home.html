@@ -19,7 +19,7 @@
         <form class="d-flex Bootstrap" action="{% url 'search_results' %}" method="get">
             <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+        </form>
     </div>
 </div>
 
@@ -29,24 +29,24 @@
             Explore Accomodations
         </h3>
     </div>
-    <div class="row">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-sm-auto g-4">
         {% for house in accomodation_list %}
-        <div class="col-sm-12 col-md-6 col-lg-4 ">
-            <div class="card" style="width: 18rem;">
-                <img style="height: 30vh;" src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=465&q=80" class="card-img-top" alt="...">
+        <div class="col">
+            <div class="card">
+                <img src="{{house.image_1.url}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">{{house.title}}</h5>
-                  <samp class="card-text">{{house.address}}</samp>
-                  
-                  <hr>
-                  <span>views: {% get_hit_count for house %}</span>
-                  <hr>
-                  <a href="{% url 'accomodation-detail' house.id %}" class="btn btn-primary">view accomodation</a>
+                    <h5 class="card-title">{{house.title}}</h5>
+                    <p class="card-text">{{house.address}}</p>
+                    <hr>
+                    <span>views: {% get_hit_count for house %}</span>
+                    <hr>
+                    <a href="{% url 'accomodation-detail' house.id %}" class="btn btn-primary">view accomodation</a>
                 </div>
-              </div>
+            </div>
         </div>
         {% endfor %}
     </div>
-    
+
 </section>
 {% endblock %}
+

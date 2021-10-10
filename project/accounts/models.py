@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.conf import settings
+from django.urls import reverse
+
 # Create your models here.
 
 
@@ -57,6 +59,10 @@ class Profile(models.Model):
     
     def is_landlord(self):
         return (self.user_type == 'LANDLORD')
+
+    def get_absolute_url(self):
+        return reverse('dashbard', args=[str(self.id)])
+
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

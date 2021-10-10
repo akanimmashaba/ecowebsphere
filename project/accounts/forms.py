@@ -15,12 +15,11 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('username', 'email')
 
 
-class ProfileUpdateForm(forms.ModelForm):
-    class Meta:
-        model=Profile
-        fields='__all__'
-
 class ProfileForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=255)
+    last_name = forms.CharField(max_length=255)
+    email = forms.EmailField()
+
     class Meta:
         model = Profile
         fields='__all__'

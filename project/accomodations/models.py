@@ -69,3 +69,7 @@ class Application(models.Model):
     date_applied = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=9,choices=ApplicationStatusChoice.choices,default=ApplicationStatusChoice.RECEIVED)
     # status_reasoning = models.TextField(blank=True, null=True, default="accomodation application recieved, by the landlord, and it is under conciderration by the landlord of the accomodation")
+
+
+    def get_absolute_url(self):
+        return reverse('applicantion-list', args=[str(self.id)])

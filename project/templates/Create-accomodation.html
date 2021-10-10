@@ -10,5 +10,15 @@
   {{ form|crispy }}
   <button class="btn btn-primary" type="submit">Submit New Post</button>
 </form>
+
+<button class="btn btn-primary btn-sm"><a href="{% url 'create-address' %}">Add a new address</a></button>
 </div>
+
+
+
+<script>
+  var name = "{{ user.id }}";
+  document.getElementById("userID").Value
+    = name;
+</script>
 {% endblock %}
