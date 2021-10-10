@@ -10,6 +10,8 @@ from django.conf import settings
 class CustomUser(AbstractUser):
     # date of birth
     # gender
+    # 
+
     def __str__(self):
         return self.email
 
@@ -23,11 +25,23 @@ class Profile(models.Model):
         STUDENT = 'STUDENT', ('STUDENT')
         LANDLORD = 'LANDLORD',('LANDLORD')
 
+    class Gender(models.TextChoices):
+        MALE = 'MALE', ('MALE')
+        fEMALE = 'fEMALE',('fEMALE')
+
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     user_type =  models.CharField(max_length=8,choices=UserTypes.choices,default=UserTypes.STUDENT)    
-    dob = models.DateField(blank=True, null=True)
+    dob = models.DateField('Date of Birth', blank=True, null=True)
+    gender = models.CharField('Gender', max_length=8,choices=Gender.choices,default=Gender.MALE)
+    email = models.EmailField('Email Address: ', default="admin@localhost.com")
+    phone_number = models.CharField("Contact Number: ", max_length=10,default="0000000000")
+    student_number = models.CharField("Student Number: ", max_length=8, default="00000000")
+
+    # student number
+    # email
+    # contact number
 
 
     def __str__(self):

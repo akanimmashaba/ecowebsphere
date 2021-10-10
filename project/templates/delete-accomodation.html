@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container">
+<h1>delete accomodation</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <p>Are you sure you want to delete "{{ object }}"?</p>
+ 
+ 
+    <input type="submit" value="Confirm">
+
+</form>
+</div>
+{% endblock %}

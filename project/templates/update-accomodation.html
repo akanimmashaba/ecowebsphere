@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container">
+<h1>Update an accomodation</h1>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button class="mt-3 btn btn-primary" type="submit">Update Accomodations</button>
+</form>
+</div>
+{% endblock %}

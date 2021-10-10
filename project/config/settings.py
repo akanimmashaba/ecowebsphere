@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     
     # third party apps
     'hitcount',
+    'crispy_forms',
 
     # local apps
     'accounts',
@@ -143,5 +144,8 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-# LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'home'
 # LOGOUT_REDIRECT_URL = 'home'
+
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

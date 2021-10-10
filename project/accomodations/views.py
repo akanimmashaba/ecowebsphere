@@ -1,9 +1,33 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.views.generic import ListView, CreateView,UpdateView,DeleteView
 from .models import Accomodation, Address
 from django.db.models import Q
-from django.views.generic.list import ListView
 from hitcount.views import HitCountDetailView
+from django.urls import reverse_lazy
+
+from.forms import AccomodationForm
+
+
+class CreateAccomodationView(CreateView):
+    model = Accomodation
+    form_class = AccomodationForm
+    template_name = 'Create-accomodation.html'
+    success_url = reverse_lazy('home')
+
+class DeleteAccomodationView(DeleteView):
+    model = Accomodation
+    success_url = reverse_lazy('home')
+
+class AccomodationUpdateView(UpdateView):
+    model = Accomodation
+    form_class = AccomodationForm
+    template_name = 'update-accomodation.html'
+
+# class CreateAddressView(CreateView): # new
+#     model = Address
+#     form_class = AddressForm
+#     template_name = 'Create-address.html'
+#     success_url = reverse_lazy('create-accomodation')
 
 
 class AccomodationList(ListView):

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load hitcount_tags %}
-
+{% load crispy_forms_tags %}
+{% block title %}Home | Home{% endblock %}
 
 {% block content %}
 
@@ -15,7 +16,7 @@
 </div>
 <div class="container mt-3 mb-3">
     <div class="justify-content-center">
-        <form class="d-flex" action="{% url 'search_results' %}" method="get">
+        <form class="d-flex Bootstrap" action="{% url 'search_results' %}" method="get">
             <input name="q" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
@@ -29,8 +30,8 @@
         </h3>
     </div>
     <div class="row">
-        {% for house in house %}
-        <div class="col-sm-12 col-md-6 col-lg-4">
+        {% for house in accomodation_list %}
+        <div class="col-sm-12 col-md-6 col-lg-4 ">
             <div class="card" style="width: 18rem;">
                 <img style="height: 30vh;" src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=465&q=80" class="card-img-top" alt="...">
                 <div class="card-body">

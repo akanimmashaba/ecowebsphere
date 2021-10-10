@@ -33,7 +33,13 @@ class Accomodation(models.Model, HitCountMixin):
     image_3 = models.ImageField(upload_to='images', null=True, blank=True)
     image_4 = models.ImageField(upload_to='images', null=True, blank=True)
     image_5 = models.ImageField(upload_to='images', null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
     
+    def desc(self):
+        if self.description == None:
+            return str("accomodation has no description")
+        return self.description
+
     def current_hit_count(self):
         return self.hit_count.hits
 
