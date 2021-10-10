@@ -4,7 +4,6 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth import get_user_model
 from .models import CustomUser
 from django.contrib.auth.views import LoginView  , LogoutView
-from django.contrib.auth.decorators import login_required
 
 user = get_user_model()
 class Login(LoginView):

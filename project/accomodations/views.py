@@ -1,11 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.views.generic import ListView, CreateView,UpdateView,DeleteView
-from .models import Accomodation, Address
+from .models import Accomodation
+from accounts.models import Profile
 from django.db.models import Q
 from hitcount.views import HitCountDetailView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
+from .forms import AccomodationForm
 
-from.forms import AccomodationForm
+User = get_user_model()
+
+@login_required
+def Dashboard(request,pk=None):
+    context = {
+        
+    }
+    return render(request, 'dashboard.html', context)
 
 
 class CreateAccomodationView(CreateView):
@@ -55,8 +66,7 @@ class SearchResultsView(ListView):
     def get_queryset(self): 
         query = self.request.GET.get('q')
         object_list = Accomodation.objects.filter(
-            Q(owner__username__icontains=query)
-            | Q(title__icontains=query)
+            Q(title__icontains=query)
             | Q(address__house_number__icontains=query)
             | Q(address__house_number__icontains=query)
             | Q(address__street_name__icontains=query)
