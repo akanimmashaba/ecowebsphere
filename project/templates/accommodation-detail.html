@@ -21,5 +21,15 @@
     </samp>
     <hr>
     {{accomodation.desc |safe}}
+
+    <hr>
+    <div>
+        <form action="{% url 'like' accomodation.pk %}" method="post">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-success" type="submit" name="accomodation_id" value={{accomodation.id}}>
+                Apply
+            </button>
+        </form>
+    </div>
 </div>
     {% endblock content %}

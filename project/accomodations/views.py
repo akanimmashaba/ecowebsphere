@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404
+from django.urls.base import reverse
 from django.views.generic import ListView, CreateView,UpdateView,DeleteView
 from .models import Accomodation,Address
 from accounts.models import Profile
@@ -8,11 +9,14 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .forms import AccomodationForm, AddressForm
-
+from django.http import HttpResponseRedirect
 User = get_user_model()
 
-
-
+@login_required
+def ApplyView(request, pk):
+    accomodation =  get_object_or_404(Accomodation, id=request.POST.get('accomodation_id'))
+    accomodation.like.add(request.user)
+    return HttpResponseRedirect(reverse('home', args=[str(pk)]))
 
 class CreateAccomodationView(CreateView):
     model = Accomodation

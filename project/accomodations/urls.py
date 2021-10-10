@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import SearchResultsView, AccomodationList,AccomodationDetail, AccomodationUpdateView,CreateAccomodationView, DeleteAccomodationView,CreateAddressView
+from .views import ApplyView,SearchResultsView, AccomodationList,AccomodationDetail, AccomodationUpdateView,CreateAccomodationView, DeleteAccomodationView,CreateAddressView
 from accounts.views import DashboardView
 
 
@@ -7,6 +7,7 @@ from accounts.views import DashboardView
 
 urlpatterns = [
     path('', AccomodationList.as_view(), name='home'),
+    path('accomodation/<int:pk>/like/', ApplyView, name='like'),
     path('accomodation/<int:pk>/', AccomodationDetail.as_view(), name='accomodation-detail'),
     path('search/', SearchResultsView.as_view(), name='search_results'),
     path('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
