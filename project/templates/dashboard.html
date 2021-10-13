@@ -3,5 +3,154 @@
 {% block title %} Dashboard {% endblock %}
 
 {% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-sm-12 col-md-4 col-lg-4 col-4">
+            <form action="{% url 'dashboard' %}">
+                <div class="card card-body bg-white border-light shadow-sm mb-4">
+                    <div class="card-header bg-white mb-3">
+                        <h2 class="h5 mb-4">Profile information</h2>
+                    </div>
+                    <div class="col-12 mb-4">
+                        <div class="card border-light text-center p-0">
+                            <div class="profile-cover rounded-top"
+                                data-background="/static/assets/img/profile-cover.jpg"></div>
+                            <div class="card-body pb-5">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <samp class="h6">username:</samp>
+                                    </div>
+                                    <div class="col-6">
+                                        <samp class="h6">{{ profile.user.username }}</samp>
+                                    </div>
+                                    <div class="col-6">
+                                        <samp class="h6">Full name:</samp>
+                                    </div>
+                                    <div class="col-6">
+                                        <samp class="h6">{{ profile.first_name }} {{ profile.last_name}}</samp>
+                                    </div>
 
+                                    <div class="col-6">
+                                        <samp class="h6">Email:</samp>
+                                    </div>
+                                    <div class="col-6">
+                                        <samp class="h6">{{ request.user.email }}</samp>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <samp class="h6">Phone Number:</samp>
+                                    </div>
+                                    <div class="col-6">
+                                        <samp class="h6">{{ profile.phone_number}}</samp>
+                                    </div>
+                                    {% if profile.is_student %}
+                                    <div class="col-6">
+                                        <samp class="h6">Student Number:</samp>
+                                    </div>
+                                    <div class="col-6">
+                                        <samp class="h6">{{ profile.student_number }}</samp>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <!-- footer -->
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-12 col-8 col-md-8 col-lg-8 col-xxl-8">
+            {% if profile.is_student %}
+            <!-- student dashboard-->
+            <div class="col-lg-8 col-md-8 col-xl-8 col-sm-12">
+                <div style="width: 100%;" class="card card-body bg-white border-light shadow-sm mb-4">
+                    <div class="card-header bg-white mb-3">
+                        <h2 class="h5 mb-4">Accomodation Applications</h2>
+                    </div>
+                    <div class="col-12 mb-4">
+                        <div class="card border-light text-center p-0">
+                            <div class="card-body pb-5">
+                                <!-- if no Applications -->
+                                <samp>you have not submited an application yet <a href="#">click here</a> to submite
+                                    application</samp>
+                                <!-- else -->
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <!-- footer -->
+                    </div>
+                </div>
+            </div>
+            <!-- endStudent dashboard-->
+            {% else %}
+            <!-- landlord dashboard-->
+            <div class="card card-body bg-white border-light shadow-sm mb-4">
+                <div class="card-header bg-white mb-3">
+                    <h2 class="h5 mb-4">Accomodation</h2>
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                    <!--  -->
+                    <div class="col">
+                        <div class="card" style="height: 8rem;">
+                            <div class="card-body">
+                                <div class="#">
+                                    <div style="padding-left: 25%; padding-top: 5%;">
+                                        <div class="">
+                                            <h5 class="card-body">
+                                                <a href="{% url 'login' %}">Add Accomodation</a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  -->
+                    <div class="col">
+                        <div class="card" style="height: 8rem;">
+                            <div class="card-body">
+                                <div class="#">
+                                    <div style="padding-left: 25%; padding-top: 5%;">
+                                        <div class="">
+                                            <h5 class="card-body">
+                                                <a href="{% url 'login' %}">View My Accomodation</a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  -->
+                    <div class="col">
+                        <div class="card" style="height: 8rem;">
+                            <div class="card-body">
+                                <div class="#">
+                                    <div style="padding-left: 25%; padding-top: 5%;">
+                                        <div class="">
+                                            <h5 class="card-body">
+                                                <a href="{% url 'login' %}">View My Accomodation applicants</a>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- endlandlord dashboard  -->
+        {% endif %}
+    </div>
+</div>
+</div>
 {% endblock %}

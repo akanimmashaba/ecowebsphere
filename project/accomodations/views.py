@@ -15,7 +15,7 @@ User = get_user_model()
 @login_required
 def ApplyView(request, pk):
     accomodation =  get_object_or_404(Accomodation, id=request.POST.get('accomodation_id'))
-    accomodation.like.add(request.user)
+    accomodation.application.add(request.user)
     return HttpResponseRedirect(reverse('home', args=[str(pk)]))
 
 class CreateAccomodationView(CreateView):

@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% load hitcount_tags %}
+
+
 
 {% block content %}
 <div class="container mt-5 py-5">
@@ -8,15 +11,24 @@
 
   <h1>there are {{results|length}} results</h1>
   <h1> {{results.query.q}}</h1>
-  
-  <ul>
-    {% for result in results %}
-      <li>
-        {{ result.title }}
-      </li>
-    {% empty %}
-    sorry there are no results availabe
-    {% endfor %}
-  </ul>
+
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-sm-auto g-4">
+        {% for house in results %}
+        <div class="col">
+            <div class="card">
+                <img src="{{house.image_1.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{house.title}}</h5>
+                    <p class="card-text">{{house.address}}</p>
+                    <hr>
+                    <span>views: {% get_hit_count for house %}</span>
+                    <hr>
+                    <a href="{% url 'accomodation-detail' house.id %}" class="btn btn-primary">view accomodation</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
 </div>
 {% endblock %}
