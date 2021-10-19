@@ -41,7 +41,6 @@ class Application(models.Model):
 class Accomodation(models.Model, HitCountMixin):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     title = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(unique=True)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',related_query_name='hit_count_generic_relation')
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='accomodation_likes')
@@ -53,22 +52,17 @@ class Accomodation(models.Model, HitCountMixin):
     description = models.TextField(null=True, blank=True)
     application = models.ManyToManyField(Application, related_name="accomodation")
     
-    def desc(self):
+    def is_description(self):
         if self.description == None:
-            return str("accomodation has no description")
-        return self.description
+            return str("accomodation has no description").upper()
+        return str(self.description)
 
     def current_hit_count(self):
         return self.hit_count.hits
 
     def __str__(self):
         return str(self.title)
-
-    def save(self, *args, **kwargs): # new
-        if not self.slug:
-            self.slug = slugify(self.title)
-        return super().save(*args, **kwargs)
-
+        
      # def get_absolute_url(self):
     #     return reverse('accomodation_detail', kwargs={'slug': self.slug})
 
