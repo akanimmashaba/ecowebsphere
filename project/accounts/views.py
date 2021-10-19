@@ -9,8 +9,8 @@ from django.urls import reverse_lazy
 
 
 from .forms import ProfileForm
-from .models import Profile
-from .forms import CustomUserCreationForm
+# from .models import Profile
+from accounts.admin import UserCreationForm
 
 
 class Login(LoginView):
@@ -20,22 +20,18 @@ class Logout(LogoutView):
     template_name = 'registration/logout.html'
 
 def signup(request):
-    user_ = request.user
+    user = request.user
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            user_.refresh_from_db()
-            user_.profile.first_name = form.cleaned_data.get('first_name')
-            user_.profile.last_name = form.cleaned_data.get('last_name')
-            user_.profile.dob = form.cleaned_data.get('dob')
-            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
             raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
+            user = authenticate(email=email, password=raw_password)
             login(request, user)
             return redirect('home')
     else:
-        form = CustomUserCreationForm()
+        form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
 
 

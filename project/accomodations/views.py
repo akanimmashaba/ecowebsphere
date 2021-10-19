@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from django.urls.base import reverse
 from django.views.generic import ListView, CreateView,UpdateView,DeleteView
 from .models import Accomodation,Address
-from accounts.models import Profile
+# from accounts.models import Profile
 from django.db.models import Q
 from hitcount.views import HitCountDetailView
 from django.urls import reverse_lazy
