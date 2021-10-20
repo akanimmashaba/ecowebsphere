@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div class="container mt-5">
+<h4>
+    My Accomodations
+</h4>
+<hr>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-sm-auto g-4">
+        {% for obj in accomodations %}
+        <div class="col">
+            <div class="card">
+                <img src="{{obj.image_1.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{obj.title}}</h5>
+                    <p class="card-text">{{obj.address}}</p>
+                    <hr>
+                    <a href="{% url 'accomodation-detail' obj.id %}" class="btn btn-primary mb-3">view accomodation</a>
+                    <br>
+                    <a href="{% url 'update-accomodation' obj.id %}" class="btn btn-warning mb-3">update accomodation</a>
+                    <br>
+                    <a href="{% url 'delete-accomodation' obj.id %}" class="btn btn-danger mb-3">delete accomodation</a>
+                    <br>
+                    <a href="{% url 'report' obj.id %}" class="btn btn-success mb-3">view report</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock content %}

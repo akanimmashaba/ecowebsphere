@@ -38,8 +38,6 @@
                     <h5 class="card-title">{{house.title}}</h5>
                     <p class="card-text">{{house.address}}</p>
                     <hr>
-                    <span>views: {% get_hit_count for house %}</span>
-                    <hr>
                     <a href="{% url 'accomodation-detail' house.id %}" class="btn btn-primary">view accomodation</a>
                 </div>
             </div>

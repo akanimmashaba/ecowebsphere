@@ -21,11 +21,13 @@ class CreateAccomodationView(CreateView):
     model = Accomodation
     form_class = AccomodationForm
     template_name = 'Create-accomodation.html'
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('dashboard')
 
 class DeleteAccomodationView(DeleteView):
     model = Accomodation
-    success_url = reverse_lazy('home')
+    template_name = 'delete-accomodation.html'
+    success_url = reverse_lazy('my-accomodations')
+
 
 class AccomodationUpdateView(UpdateView):
     model = Accomodation
@@ -42,21 +44,57 @@ class AccomodationCreateView(CreateView):
     model = Accomodation
     template_name = "Create-accomodation.html"
 
+def AccomodationsList(request):
+    context = {
+        'object': Accomodation.objects.all()
+    }
+    return render(request, 'accomodation-list.html', context)
+
+@login_required
+def MyAccomodations(request):
+    context = {
+        'accomodations': Accomodation.objects.all().filter(owner=request.user)
+    }
+    return render(request, 'my-accomodations.html', context)
+
+@login_required
+def ViewReport(request, pk):
+    accomodation = get_object_or_404(Accomodation, pk=pk)
+    # accomodation_applications as accom_apps
+    accom_apps = accomodation.applied.all()
+    labels = []
+    data = []
+    queryset = Application.objects.all()
+
+    for entry in queryset:
+        labels.append(entry[Application.accomodation])
+        data.append(entry[Accomodation.applicant])
+    context = {
+        'applications': accom_apps,
+        'labels': labels,
+        'data': data,
+
+
+    }
+    return render(request, 'report-page.html', context)
+
 class ApplicationDetail(DetailView):
     model = Application
     template_name = 'applications.html'
 
+@login_required
 def Apply(request, pk):
-    accomodation =  get_object_or_404(Accomodation, id=request.POST.get('accomodation_id'))
-    applied = False
+    pass
+    # accomodation =  get_object_or_404(Accomodation, id=request.POST.get('accomodation_id'))
+    # applied = False
 
-    if Accomodation.applied.filter(id=request.user.id).exists():
-        accomodation.applied.remove(request.user)
-        applied = False
-    else:
-        accomodation.applied.add(request.user)
-        applied = True    
-    return HttpResponseRedirect(reverse('accomodation-detail', args=[str(pk)]))
+    # if Accomodation.applied.filter(id=request.user.id).exists():
+    #     accomodation.applied.remove(request.user)
+    #     applied = False
+    # else:
+    #     accomodation.applied.add(request.user)
+    #     applied = True
+    # return HttpResponseRedirect(reverse('accomodation-detail', args=[str(pk)]))
     
 
 class AccomodationList(ListView):

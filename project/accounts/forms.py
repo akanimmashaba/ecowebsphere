@@ -52,4 +52,4 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields='__all__'
+        fields = ('first_name', 'last_name', 'phone_number','user_type', 'gender', 'ID_number', 'date_of_birth')

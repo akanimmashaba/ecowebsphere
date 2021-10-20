@@ -9,9 +9,13 @@ from .views import (
     CreateAccomodationView, 
     DeleteAccomodationView,
     CreateAddressView,
+    MyAccomodations,
+    AccomodationsList,
+    ViewReport,
+
 )
 
-from accounts.views import DashboardView
+from accounts.views import DashboardView,profileView
 
 
 
@@ -20,6 +24,9 @@ urlpatterns = [
     path('', AccomodationList.as_view(), name='home'),
     # path('accomodation/<int:pk>/like/', ApplyView, name='like'),
     # path('accomodation/apply/<int:pk>/', Apply, name='apply'),
+    path('profile/', profileView, name='profile'),
+
+    path('accomodation/', AccomodationsList, name='accomodation-list'),
     path('accomodation/<int:pk>/', AccomodationDetail.as_view(), name='accomodation-detail'),
     path('accomodation/<int:pk>/apply/', Apply, name='apply'),
     path('search/', SearchResultsView.as_view(), name='search_results'),
@@ -29,4 +36,8 @@ urlpatterns = [
     path('dashboard/accomodation/create/', CreateAccomodationView.as_view(), name='create-accomodation'),
     path('dashboard/accomodation/update/<int:pk>/', AccomodationUpdateView.as_view(), name='update-accomodation'),
     path('dashboard/accomodation/delete/<int:pk>/', DeleteAccomodationView.as_view(), name='delete-accomodation'),
+    path('dashboard/accomodation/my-accomodations/', MyAccomodations, name='my-accomodations'),
+    path('dashboard/accomodation/my-accomodations/<int:pk>/', ViewReport, name='report'),
+
 ]
+

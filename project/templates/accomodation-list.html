@@ -3,16 +3,13 @@
 
 
 {% block content %}
-<div class="container mt-5 py-5">
-  {% comment %}
-    {{results.query}}
-  {% endcomment %}
+<div class="container mt-5 mt-2">
 
-  <h1>there are {{results|length}} results</h1>
-  <h1> {{results.query.q}}</h1>
+  <p>there is a  total number of  #<strong> {{object|length}} </strong> accomodation in our database</p>
+<hr>
 
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-sm-auto g-4">
-        {% for house in results %}
+        {% for house in object %}
         <div class="col">
             <div class="card">
                 <img src="{{house.image_1.url}}" class="card-img-top" alt="...">

@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load hitcount_tags %}
 {% block title %}{{object.title}}{% endblock %}
 
 
@@ -20,8 +19,6 @@
        <div class="col-12">
         <div class="row">
             <div class="col-4">
-                total views: {% get_hit_count for accomodation %}
-                {% comment %} total views: {% get_hit_count for [accomodation] %} {% endcomment %}
             </div>
             <div class="col-4">
                 date added:
@@ -75,7 +72,8 @@
            </div>
 
            <!-- if landlord -->
-           {% if request.user.profile.is_landlord %}
+           {% if request.user.profile.is_landlord%}
+           
            <div class="card ">
                <div class="card-header text-center">
                     View Report
@@ -100,8 +98,7 @@
                 </p>
                 <div class="w-100">
                     <p>
-                    
-                        <form action="{% url 'apply' accomodation.pk %}" method="post">
+                        {% comment %} <form action="{% url 'apply' accomodation.pk %}" method="post">
                             {% csrf_token %}
                             <input type="hidden" name="accomodation_id" value="{{object.id}}">
                             {% if user not in object.applied.all %}
@@ -109,9 +106,7 @@
                             {% else %}
                             <button type="submit" class="btn btn-secondary m-3">Cancel application</button>
                             {% endif %}
-                        </form>
-
-                        
+                        </form> {% endcomment %}
                     </p>
                 </div>
             </div>

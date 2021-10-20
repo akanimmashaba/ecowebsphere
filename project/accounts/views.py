@@ -7,10 +7,12 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
+from accomodations.models import Accomodation
+
 
 from .forms import ProfileForm
 from .models import Profile
-from accounts.admin import UserCreationForm
+from accounts.admin import UserCreationForm, UserChangeForm
 
 
 class Login(LoginView):
@@ -23,8 +25,14 @@ def signup(request):
     user = request.user
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
+        profile_form = ProfileForm(instance=request.user,data=request.POST)
+        if form.is_valid() and profile_form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.first_name = form.cleaned_data.get('first_name')
+            user.profile.last_name = form.cleaned_data.get('last_name')
+            user.profile.email = form.cleaned_data.get('email')
+            user.save()
             email = form.cleaned_data.get('email')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=raw_password)
@@ -44,8 +52,10 @@ class DashboardView(View):
         return super(DashboardView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
+        accomodations = Accomodation.objects.all().filter(owner=request.user)
         context = {
             'profile': self.profile,
+            'accomodations': accomodations
         }
         return render(request, 'dashboard.html', context)
 
@@ -62,4 +72,28 @@ class DashboardView(View):
         else:
             form = ProfileForm()
         return redirect('dashboard')
+
+
+def profileView(request):
+    user_form = UserChangeForm
+    profile_form = ProfileForm
+    if request.method == 'POST':
+        form_1 = user_form(request.POST, instance=request.user)
+        form_2 = profile_form(request.Post, instance=request.user.profile)
+
+        if form_1.is_valid() and form_2.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='dashboard')
+
+        else:
+            user_form = UserChangeForm(instance=request.user)
+            profile_form = ProfileForm(instance=request.user.profile)
+
+    context = {
+        'user_form': user_form,
+        'profile_form': profile_form,
+    }
+    return render(request, 'edit-profile.html', context)
 
