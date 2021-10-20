@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import ( BaseUserManager, AbstractBaseUser)
+from django.db.models.fields import related
 
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -81,7 +82,7 @@ class Profile(models.Model):
         MALE = 'MALE', ('MALE')
         FEMALE = 'FEMALE',('FEMALE')
 
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile")
     first_name = models.CharField(max_length=100,blank=True, null=True)
     last_name = models.CharField(max_length=100,blank=True, null=True)
     user_type  = models.CharField(max_length=8,choices=USER_TYPES.choices,default=USER_TYPES.STUDENT)    
@@ -89,13 +90,16 @@ class Profile(models.Model):
     ID_number = models.CharField("ID number",max_length=13,blank=True, null=True)
     # stdent_number = models.CharField("student number",max_length=8)
     phone_number = models.CharField("Contact Number: ", max_length=10,blank=True, null=True)
-    date_of_birth = models.DateField('Date of Birth', blank=True, null=True)
+    date_of_birth = models.DateField('Date of Birth: ', blank=True, null=True)
 
     def is_student(self):
         return (self.user_type == 'STUDENT')
             
     def is_landlord(self):
         return (self.user_type == 'LANDLORD')
+
+    def my_username(self):
+        return self.user.username
 
     def get_absolute_url(self):
         return reverse('dashbard', args=[str(self.id)])

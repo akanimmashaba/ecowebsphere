@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # third party apps
     'hitcount',
     'crispy_forms',
+    'django_quill',
 
     # local apps
     'accounts',

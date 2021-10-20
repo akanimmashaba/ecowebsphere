@@ -1,10 +1,10 @@
 from django.db import models
 from django.conf import settings
+from django.db.models.fields import related
 from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
 from django.urls import reverse
-from django.template.defaultfilters import slugify 
-
+from django_quill.fields import QuillField
 
 class Address(models.Model):
     class ProvinceChoice(models.TextChoices):
@@ -22,24 +22,9 @@ class Address(models.Model):
         return f"{self.house_number} {self.street_name} {self.locality} {self.postal_code} {self.country}"
 
 
-class Application(models.Model):
-    class ApplicationStatusChoice(models.TextChoices):
-        APPROVED = 'APPROVED', ('APPROVED')
-        REJECTED = 'REJECTED', ('REJECTED')
-        RECEIVED = 'RECEIVED', ('RECEIVED')
-
-    applicant = models.ForeignKey(settings.AUTH_USER_MODEL,verbose_name=("Applicant"), on_delete=models.CASCADE)
-    date_applied = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=9,choices=ApplicationStatusChoice.choices,default=ApplicationStatusChoice.RECEIVED)
-    # status_reasoning = models.TextField(blank=True, null=True, default="accomodation application recieved, by the landlord, and it is under conciderration by the landlord of the accomodation")
-
-
-    def get_absolute_url(self):
-        return reverse('applicantion-list', args=[str(self.id)])
-
 
 class Accomodation(models.Model, HitCountMixin):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name="owner")
     title = models.CharField(max_length=255, unique=True)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',related_query_name='hit_count_generic_relation')
@@ -49,23 +34,50 @@ class Accomodation(models.Model, HitCountMixin):
     image_3 = models.ImageField(upload_to='images', null=True, blank=True)
     image_4 = models.ImageField(upload_to='images', null=True, blank=True)
     image_5 = models.ImageField(upload_to='images', null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    application = models.ManyToManyField(Application, related_name="accomodation")
-    
-    def is_description(self):
-        if self.description == None:
-            return str("accomodation has no description").upper()
-        return str(self.description)
+    description = QuillField(null=True, blank=True)
+    applied = models.ManyToManyField(settings.AUTH_USER_MODEL,default=None, blank=True, related_name="applied")
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def total_application(self):
+        return self.applied.all().count()
 
     def current_hit_count(self):
         return self.hit_count.hits
 
+    def is_description(self):
+            if self.description == None:
+                return str("accomodation has no description").upper()
+            return str(self.description)
     def __str__(self):
         return str(self.title)
-        
+
      # def get_absolute_url(self):
     #     return reverse('accomodation_detail', kwargs={'slug': self.slug})
 
     def get_absolute_url(self):
         return reverse('accomodation-detail', args=[str(self.id)])
+
+class Application(models.Model):
+    class ApplicationStatusChoice(models.TextChoices):
+        APPROVED = 'APPROVED', ('APPROVED')
+        REJECTED = 'REJECTED', ('REJECTED')
+        RECEIVED = 'RECEIVED', ('RECEIVED')
+        CANCELLED = 'CANCELLED', ('CANCELLED')
+
+    accomodation = models.ForeignKey(settings.AUTH_USER_MODEL,verbose_name=("accomodation"), on_delete=models.CASCADE, related_name="application")
+    applicant = models.ForeignKey(settings.AUTH_USER_MODEL,verbose_name=("Applicant"), on_delete=models.CASCADE, related_name="applicant")
+    date_applied = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=10,choices=ApplicationStatusChoice.choices,default=ApplicationStatusChoice.RECEIVED)
+    # status_reasoning = models.TextField(blank=True, null=True, default="accomodation application recieved, by the landlord, and it is under conciderration by the landlord of the accomodation")
+
+    def __str__(self):
+        return str(f'Application ID #{self.id} submitted by {self.applicant}')
+    
+    def application_id(self):
+        return str(self.id)
+    
+
+    def get_absolute_url(self):
+        return reverse('applicantion-list', args=[str(self.id)])
 

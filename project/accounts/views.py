@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 
 
 from .forms import ProfileForm
-# from .models import Profile
+from .models import Profile
 from accounts.admin import UserCreationForm
 
 
