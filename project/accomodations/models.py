@@ -29,7 +29,7 @@ class Accomodation(models.Model, HitCountMixin):
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
     hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',related_query_name='hit_count_generic_relation')
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='accomodation_likes')
-    image_1 = models.ImageField(upload_to='images', null=True, blank=True)
+    image_1 = models.ImageField(upload_to='images')
     image_2 = models.ImageField(upload_to='images', null=True, blank=True)
     image_3 = models.ImageField(upload_to='images', null=True, blank=True)
     image_4 = models.ImageField(upload_to='images', null=True, blank=True)

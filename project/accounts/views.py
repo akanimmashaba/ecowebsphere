@@ -7,8 +7,6 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 
-from project.accomodations.models import Accomodation
-
 
 from .forms import ProfileForm
 from .models import Profile
@@ -46,7 +44,6 @@ class DashboardView(View):
         return super(DashboardView, self).dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        
         context = {
             'profile': self.profile,
         }
