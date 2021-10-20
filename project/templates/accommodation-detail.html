@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load hitcount_tags %}
-{% block title %}{{accomodation.title}}{% endblock %}
+{% block title %}{{object.title}}{% endblock %}
 
 
 {% block content %}
@@ -101,6 +101,15 @@
                 <div class="w-100">
                     <p>
                     
+                        <form action="{% url 'apply' accomodation.pk %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="accomodation_id" value="{{object.id}}">
+                            {% if user not in object.applied.all %}
+                            <button type="submit" class="btn btn-primary m-3">Apply</button>
+                            {% else %}
+                            <button type="submit" class="btn btn-secondary m-3">Cancel application</button>
+                            {% endif %}
+                        </form>
 
                         
                     </p>

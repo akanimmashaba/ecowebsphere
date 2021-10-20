@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render,get_object_or_404
 from django.urls.base import reverse
 from django.views.generic import ListView, CreateView,UpdateView,DeleteView
+from django.views.generic.detail import DetailView
 from .models import Accomodation,Address, Application
 # from accounts.models import Profile
 from django.db.models import Q
@@ -41,15 +42,22 @@ class AccomodationCreateView(CreateView):
     model = Accomodation
     template_name = "Create-accomodation.html"
 
-# @login_required
-# def ApplyView(request, pk):
-#     accomodation =  get_object_or_404(Accomodation, id=request.POST.get('accomodation_id'))
-#     accomodation.application.add(request.user)
-#     return HttpResponseRedirect(reverse('home', args=[str(pk)]))
+class ApplicationDetail(DetailView):
+    model = Application
+    template_name = 'applications.html'
 
 def Apply(request, pk):
+    accomodation =  get_object_or_404(Accomodation, id=request.POST.get('accomodation_id'))
+    applied = False
+
+    if Accomodation.applied.filter(id=request.user.id).exists():
+        accomodation.applied.remove(request.user)
+        applied = False
+    else:
+        accomodation.applied.add(request.user)
+        applied = True    
+    return HttpResponseRedirect(reverse('accomodation-detail', args=[str(pk)]))
     
-    pass
 
 class AccomodationList(ListView):
     model = Accomodation
@@ -61,15 +69,16 @@ class AccomodationDetail(HitCountDetailView):
     # count_hit = True
     template_name = 'accommodation-detail.html'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     now =  timezone.now()
-    #     # user = self.request.user
-    #     context = {
-    #         # 'user': user,
-    #         'now': now,
-    #     }
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        now =  timezone.now()
+        
+        # user = self.request.user
+        context = {
+            # 'user': user,
+            'now': now,
+        }
+        return context
 
 
 class SearchResultsView(ListView):
