@@ -84,17 +84,15 @@ class ApplicationDetail(DetailView):
 
 @login_required
 def Apply(request, pk):
-    pass
-    # accomodation =  get_object_or_404(Accomodation, id=request.POST.get('accomodation_id'))
-    # applied = False
-
-    # if Accomodation.applied.filter(id=request.user.id).exists():
-    #     accomodation.applied.remove(request.user)
-    #     applied = False
-    # else:
-    #     accomodation.applied.add(request.user)
-    #     applied = True
-    # return HttpResponseRedirect(reverse('accomodation-detail', args=[str(pk)]))
+    accomodation =  get_object_or_404(Accomodation, id=request.POST.get('accomodation_id'))
+    applied = False
+    if Accomodation.applied.filter(id=request.user.id).exists():
+        accomodation.applied.remove(request.user)
+        applied = False
+    else:
+        accomodation.applied.add(request.user)
+        applied = True
+    return HttpResponseRedirect(reverse('accomodation-detail', args=[str(pk)]))
     
 
 class AccomodationList(ListView):

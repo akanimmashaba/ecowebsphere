@@ -77,7 +77,7 @@ class DashboardView(View):
 def profileView(request):
     user_form = UserChangeForm
     profile_form = ProfileForm
-    if request.method == 'POST':
+    if request.method == request.POST:
         form_1 = user_form(request.POST, instance=request.user)
         form_2 = profile_form(request.Post, instance=request.user.profile)
 
