@@ -1,7 +1,6 @@
 from django.db import models
 from django.conf import settings
 from django.db.models.fields import related
-from hitcount.models import HitCountMixin, HitCount
 from django.contrib.contenttypes.fields import GenericRelation
 from django.urls import reverse
 from django_quill.fields import QuillField
@@ -23,11 +22,10 @@ class Address(models.Model):
 
 
 
-class Accomodation(models.Model, HitCountMixin):
+class Accomodation(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name="owner")
     title = models.CharField(max_length=255, unique=True)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
-    hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk',related_query_name='hit_count_generic_relation')
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='accomodation_likes')
     image_1 = models.ImageField(upload_to='images')
     image_2 = models.ImageField(upload_to='images', null=True, blank=True)
@@ -42,9 +40,7 @@ class Accomodation(models.Model, HitCountMixin):
     def total_application(self):
         return self.applied.all().count()
 
-    def current_hit_count(self):
-        return self.hit_count.hits
-
+   
     def is_description(self):
             if self.description == None:
                 return str("accomodation has no description").upper()

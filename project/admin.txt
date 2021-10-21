@@ -4,3 +4,13 @@ to login go to: localhost:8000/my-admin
     username: admin
     password: superuser
 
+# student
+    email: Student1@example.com
+    password: Student1@example.com
+    usernae: student
+    
+# landlord
+    email: Landlord1@example.com
+    password: Landlord1@example.com
+    usernae: landlord
+

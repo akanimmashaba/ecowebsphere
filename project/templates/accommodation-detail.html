@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}{{object.title}}{% endblock %}
+{% block title %}{{accomodation.title}}{% endblock %}
 
 
 {% block content %}
@@ -33,7 +33,7 @@
 
    <div class="row">
        <div class="col-sm-12 col-md-12 col-lg-8">
-        {{accomodation.desc |safe}}
+        {{accomodation.decription |safe}}
        </div>
        <div class="col-sm-12 col-md-12 col-lg-4">
            <div class="card mb-3 ">

@@ -92,6 +92,9 @@ class Profile(models.Model):
     phone_number = models.CharField("Contact Number: ", max_length=10,blank=True, null=True)
     date_of_birth = models.DateField('Date of Birth: ', blank=True, null=True)
 
+    def __str__(self):
+        return str(self.user)
+
     def is_student(self):
         return (self.user_type == 'STUDENT')
             
@@ -109,8 +112,7 @@ class Profile(models.Model):
         verbose_name_plural  =  "Profiles" 
         ordering = ("last_name", "first_name")
 
-    def __str__(self):
-        return self.user.username
+    
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

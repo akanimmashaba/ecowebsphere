@@ -5,13 +5,11 @@ from django.views.generic.detail import DetailView
 from .models import Accomodation,Address, Application
 # from accounts.models import Profile
 from django.db.models import Q
-from hitcount.views import HitCountDetailView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from .forms import AccomodationForm, AddressForm
 from django.http import HttpResponseRedirect, request
-User = get_user_model()
 from django.utils import timezone
 from django.http import request
 
@@ -27,7 +25,6 @@ class DeleteAccomodationView(DeleteView):
     model = Accomodation
     template_name = 'delete-accomodation.html'
     success_url = reverse_lazy('my-accomodations')
-
 
 class AccomodationUpdateView(UpdateView):
     model = Accomodation
@@ -69,12 +66,11 @@ def ViewReport(request, pk):
     for entry in queryset:
         labels.append(entry[Application.accomodation])
         data.append(entry[Accomodation.applicant])
+        
     context = {
         'applications': accom_apps,
         'labels': labels,
         'data': data,
-
-
     }
     return render(request, 'report-page.html', context)
 
@@ -100,22 +96,9 @@ class AccomodationList(ListView):
     paginate_by = 10
     template_name = 'home.html'
 
-class AccomodationDetail(HitCountDetailView):
+class AccomodationDetail(DetailView):
     model = Accomodation
-    # count_hit = True
     template_name = 'accommodation-detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        now =  timezone.now()
-        
-        # user = self.request.user
-        context = {
-            # 'user': user,
-            'now': now,
-        }
-        return context
-
 
 class SearchResultsView(ListView):
     model = Accomodation

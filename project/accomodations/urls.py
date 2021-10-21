@@ -17,7 +17,7 @@ from .views import (
 
 from accounts.views import DashboardView,profileView
 
-app_name = 'accomodation'
+
 
 
 urlpatterns = [
@@ -25,11 +25,11 @@ urlpatterns = [
     # path('accomodation/<int:pk>/like/', ApplyView, name='like'),
     # path('accomodation/apply/<int:pk>/', Apply, name='apply'),
     path('profile/', profileView, name='profile'),
-    path('search/', SearchResultsView.as_view(), name='search_results'),
 
     path('accomodation/', AccomodationsList, name='accomodation-list'),
     path('accomodation/<int:pk>/', AccomodationDetail.as_view(), name='accomodation-detail'),
-    # path('accomodation/<int:pk>/apply/', Apply, name='apply'),
+    path('accomodation/<int:pk>/apply/', Apply, name='apply'),
+    path('search/', SearchResultsView.as_view(), name='search_results'),
     path('hitcount/', include(('hitcount.urls', 'hitcount'), namespace='hitcount')),
     path('dashboard/',DashboardView.as_view(), name='dashboard'),
     path('dashboard/address/create/', CreateAddressView.as_view(), name='create-address'),
