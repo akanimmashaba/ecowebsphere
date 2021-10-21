@@ -33,7 +33,7 @@
 
    <div class="row">
        <div class="col-sm-12 col-md-12 col-lg-8">
-        {{accomodation.decription |safe}}
+        {{accomodation.is_description |safe}}
        </div>
        <div class="col-sm-12 col-md-12 col-lg-4">
            <div class="card mb-3 ">
@@ -72,15 +72,14 @@
            </div>
 
            <!-- if landlord -->
-           {% if request.user.profile.is_landlord%}
-           
+           {% if request.user.profile.is_landlord %}
            <div class="card ">
                <div class="card-header text-center">
                     View Report
                </div>
-               <div class="card-body">
+               <div class="card-body align-items-center align-content-center align-self-center">
                    {% comment %} <samp>There are <strong>{{accomodation.application.all.count }}</strong> applications submitted </samp> {% endcomment %}
-                <button>
+                <button class="btn btn-primary">
                     View Report
                 </button>
                </div>
@@ -88,7 +87,7 @@
            {% endif %}
            {% if request.user.profile.is_student %}
         <!-- if student -->
-        <div class="card  text-center">
+        <div class="card  text-center m-3">
             <div class="card-header">
                 Apply
             </div>
@@ -96,7 +95,7 @@
                 <p>
                     Do you want to apply for accomodation here at <strong>{{accomodation.title}}</strong>
                 </p>
-                <div class="w-100">
+                <div class="">
                     <p>
                         {% comment %} <form action="{% url 'apply' accomodation.pk %}" method="post">
                             {% csrf_token %}
@@ -107,6 +106,8 @@
                             <button type="submit" class="btn btn-secondary m-3">Cancel application</button>
                             {% endif %}
                         </form>  {% endcomment %}
+                            <button type="submit" class="btn disabled btn-secondary m-3">Cancel application</button>
+                        
                     </p>
                 </div>
             </div>

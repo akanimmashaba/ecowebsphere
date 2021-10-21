@@ -21,18 +21,59 @@ class Login(LoginView):
 class Logout(LogoutView):
     template_name = 'registration/logout.html'
 
+# def signup(request):
+#     user = request.user
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+#         profile_form = ProfileForm(instance=request.user,data=request.POST)
+#         if form.is_valid() and profile_form.is_valid():
+#             user = form.save()
+#             user.refresh_from_db()
+#             user.profile.first_name = form.cleaned_data.get('first_name')
+#             user.profile.last_name = form.cleaned_data.get('last_name')
+#             user.profile.email = form.cleaned_data.get('email')
+#             user.save()
+#             email = form.cleaned_data.get('email')
+#             raw_password = form.cleaned_data.get('password1')
+#             user = authenticate(email=email, password=raw_password)
+#             login(request, user)
+#             return redirect('home')
+#     else:
+#         form = UserCreationForm()
+#     return render(request, 'registration/signup.html', {'form': form})
+
+# def signup(request):
+#     user = request.user
+#     form = UserCreationForm(request.POST)
+#     profile = ProfileForm()
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+#         profile_form = profile(request.POST)
+#         if form.is_valid() :
+#             user = form.save(commit=False)
+#             user.save()
+#             user = form.save()
+#             user.refresh_form_db()
+#             user.profile.user_type = form.cleaned_data.get('user_type')
+#             user.save()
+#             email = form.cleaned_data.get('email')
+#             raw_password = form.cleaned_data.get('password1')
+#             user = authenticate(email=email, password=raw_password)
+#             login(request, user)
+#             return redirect('home')
+#     else:
+#         form = UserCreationForm()
+#         profile = ProfileForm()
+
+#     return render(request, 'registration/signup.html', {'form': form})
+
+
 def signup(request):
     user = request.user
+    form = UserCreationForm(request.POST)
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        profile_form = ProfileForm(instance=request.user,data=request.POST)
-        if form.is_valid() and profile_form.is_valid():
+        if form.is_valid():
             user = form.save()
-            user.refresh_from_db()
-            user.profile.first_name = form.cleaned_data.get('first_name')
-            user.profile.last_name = form.cleaned_data.get('last_name')
-            user.profile.email = form.cleaned_data.get('email')
-            user.save()
             email = form.cleaned_data.get('email')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=raw_password)

@@ -54,7 +54,7 @@
                                         <samp class="h6">Student Number:</samp>
                                     </div>
                                     <div class="col-6">
-                                        <samp class="h6">{{ profile.student_number }}</samp>
+                                        <samp class="h6">{{ profile.student_number }}NULL</samp>
                                     </div>
                                     {% endif %}
                                      <div class="col-12 mt-5">
@@ -72,7 +72,7 @@
             </form>
         </div>
         <div class="col-sm-12 col-8 col-md-8 col-lg-8 col-xxl-8">
-            {% if profile.is_landlord %}
+            {% if profile.is_student %}
             <!-- student dashboard-->
             <div class="col-lg-8 col-md-8 col-xl-8 col-sm-12">
                 <div style="width: 100%;" class="card card-body bg-white border-light shadow-sm mb-4">
@@ -83,8 +83,8 @@
                         <div class="card border-light text-center p-0">
                             <div class="card-body pb-5">
                                 <!-- if no Applications -->
-                                <samp>you have not submited an application yet <a href="{% url 'accomodation-list' %}">click here</a> to submite
-                                    application</samp>
+                                <samp>you have not submited an application yet <a href="{% url 'accomodation-list' %}">click here</a> find, select and submite
+                                   your application</samp>
                                 <!-- else -->
                                 
                             </div>
@@ -107,16 +107,8 @@
                     <!--  -->
                     <div class="col">
                         <div class="card" style="height: 8rem;">
-                            <div class="card-body">
-                                <div class="#">
-                                    <div style="padding-left: 25%; padding-top: 5%;">
-                                        <div class="">
-                                            <h5 class="card-body">
-                                                <a class="btn btn-primary" href="{% url 'create-address' %}">Add Accomodation</a>
-                                            </h5>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class=" mt-4 card-body align-items-center align-content-center align-self-center">
+                                <a class="btn btn-primary" href="{% url 'create-address' %}">Add Accomodation</a>                
                             </div>
                         </div>
                     </div>
@@ -128,7 +120,7 @@
                                 <div class="#">
                                     <div style="padding-left: 25%; padding-top: 5%;">
                                         <div class="">
-                                            <h5 class="card-body">
+                                            <h5 class="card-body  align-items-center align-content-center align-self-center">
                                                 <a class="btn btn-primary" href="{% url 'my-accomodations' %}">View My Accomodation</a>
                                             </h5>
                                         </div>
