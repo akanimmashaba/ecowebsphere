@@ -49,12 +49,18 @@
                                     <div class="col-6">
                                         <samp class="h6">{{ profile.gender}}</samp>
                                     </div>
+                                    <div class="col-6">
+                                        <samp class="h6">User Type:</samp>
+                                    </div>
+                                    <div class="col-6">
+                                        <samp class="h6">{{ profile.user_type}}</samp>
+                                    </div>
                                     {% if profile.is_student %}
                                     <div class="col-6">
                                         <samp class="h6">Student Number:</samp>
                                     </div>
                                     <div class="col-6">
-                                        <samp class="h6">{{ profile.student_number }}NULL</samp>
+                                        <samp class="h6">{{ profile.student_number }}None</samp>
                                     </div>
                                     {% endif %}
                                      <div class="col-12 mt-5">
@@ -83,10 +89,30 @@
                         <div class="card border-light text-center p-0">
                             <div class="card-body pb-5">
                                 <!-- if no Applications -->
-                                <samp>you have not submited an application yet <a href="{% url 'accomodation-list' %}">click here</a> find, select and submite
-                                   your application</samp>
+                                {% comment %} <samp>you have not submited an application yet <a href="{% url 'accomodation-list' %}">click here</a> find, select and submite
+                                   your application</samp> {% endcomment %}
                                 <!-- else -->
-                                
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Accomodation Name</th>
+                                        <th scope="col">date applied</th>
+                                        <th scope="col">status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for applied in applied %}
+                                        <tr>
+                                        <th scope="row">*</th>
+                                        <td>{{ applied }}</td>
+                                        <td>2021-10-21 {{applied.status}}</td>
+                                        <td>application received</td>
+                                        </tr>
+                                        {% endfor %}
+                                    
+                                    </tbody>
+                                    </table>
                             </div>
                         </div>
                     </div>

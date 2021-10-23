@@ -58,19 +58,11 @@ def MyAccomodations(request):
 def ViewReport(request, pk):
     accomodation = get_object_or_404(Accomodation, pk=pk)
     # accomodation_applications as accom_apps
-    accom_apps = accomodation.applied.all()
-    labels = []
-    data = []
-    queryset = Application.objects.all()
-
-    for entry in queryset:
-        labels.append(entry[Application.accomodation])
-        data.append(entry[Accomodation.applicant])
+    applied_accomodations = accomodation.applied.all()
+    
         
     context = {
-        'applications': accom_apps,
-        'labels': labels,
-        'data': data,
+        'applied_accomodations':applied_accomodations,
     }
     return render(request, 'report-page.html', context)
 

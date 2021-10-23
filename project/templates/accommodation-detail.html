@@ -21,7 +21,7 @@
             <div class="col-4">
             </div>
             <div class="col-4">
-                date added:
+                
             </div>
             <div class="col-4">
                 <!--  -->
@@ -33,7 +33,18 @@
 
    <div class="row">
        <div class="col-sm-12 col-md-12 col-lg-8">
-        {{accomodation.is_description |safe}}
+       <div class="card p-3 mb-5">
+           <h5>
+               Accomodation description
+           </h5>
+           <hr>
+           <div class="card-body">
+            {{ accomodation.description | safe }}
+           </div>
+       </div>
+
+
+        
        </div>
        <div class="col-sm-12 col-md-12 col-lg-4">
            <div class="card mb-3 ">
@@ -82,7 +93,7 @@
                 <button class="btn btn-primary">
                     View Report
                 </button>
-               </div>
+               </div> 
            </div>
            {% endif %}
            {% if request.user.profile.is_student %}
@@ -96,6 +107,7 @@
                     Do you want to apply for accomodation here at <strong>{{accomodation.title}}</strong>
                 </p>
                 <div class="">
+
                     <p>
                         {% comment %} <form action="{% url 'apply' accomodation.pk %}" method="post">
                             {% csrf_token %}
@@ -106,7 +118,7 @@
                             <button type="submit" class="btn btn-secondary m-3">Cancel application</button>
                             {% endif %}
                         </form>  {% endcomment %}
-                            <button type="submit" class="btn disabled btn-secondary m-3">Cancel application</button>
+                            <a class="btn btn-secondary m-3" href="{% url 'dashboard' %}">apply application</a>
                         
                     </p>
                 </div>

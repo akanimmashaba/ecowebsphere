@@ -32,7 +32,7 @@ class Accomodation(models.Model):
     image_3 = models.ImageField(upload_to='images', null=True, blank=True)
     image_4 = models.ImageField(upload_to='images', null=True, blank=True)
     image_5 = models.ImageField(upload_to='images', null=True, blank=True)
-    description = QuillField(null=True, blank=True)
+    description = models.TextField()
     applied = models.ManyToManyField(settings.AUTH_USER_MODEL,default=None, blank=True, related_name="applied")
     date_added = models.DateTimeField(auto_now_add=True)
 

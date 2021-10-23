@@ -73,12 +73,8 @@ def signup(request):
     form = UserCreationForm(request.POST)
     if request.method == 'POST':
         if form.is_valid():
-            user = form.save()
-            email = form.cleaned_data.get('email')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(email=email, password=raw_password)
-            login(request, user)
-            return redirect('home')
+            form.save()
+            return redirect('login')
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
@@ -91,12 +87,15 @@ class DashboardView(View):
     def dispatch(self, request, *args, **kwargs):
         self.profile, __ = Profile.objects.get_or_create(user=request.user)
         return super(DashboardView, self).dispatch(request, *args, **kwargs)
-
+        # Accomodation.applied.filter(id=request.user.id)
     def get(self, request):
         accomodations = Accomodation.objects.all().filter(owner=request.user)
+        applied_accomodations = Accomodation.objects.all().filter(applied=self.request.user)
+
         context = {
             'profile': self.profile,
-            'accomodations': accomodations
+            'accomodations': accomodations,
+            'applied': applied_accomodations,
         }
         return render(request, 'dashboard.html', context)
 
